@@ -4,7 +4,7 @@ import "./calendar.css";
 import { Button } from "../ui/button";
 
 function Calendar() {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date("11-10-2024"));
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [days, setDays] = useState<number>(0);
   const [firstDay, setFirstDay] = useState<number>(0);
   const [month, setMonth] = useState<number>(currentDate.getMonth());
@@ -86,7 +86,14 @@ function Calendar() {
       </div>
       <div className="days-grid">
         {grid.map((day) => (
-          <DayCard day={day} />
+          <DayCard
+            day={day}
+            isToday={
+              currentDate.getFullYear() == year &&
+              currentDate.getMonth() == month &&
+              currentDate.getDate() == day
+            }
+          />
         ))}
       </div>
     </div>
