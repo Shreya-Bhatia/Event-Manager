@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "./calendar.css";
 
 function Calendar() {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [currentDate, setCurrentDate] = useState<Date>(new Date("11-10-2024"));
   const [days, setDays] = useState<number>(0);
   const [firstDay, setFirstDay] = useState<number>(0);
 
@@ -36,6 +36,11 @@ function Calendar() {
     setFirstDay(new Date(year, month, 1).getDay());
   }, [currentDate]);
 
+  const grid = [
+    ...Array(firstDay).fill(0),
+    ...Array.from({ length: days }, (_, i) => i + 1)
+  ];
+
   return (
     <div className="calendar">
       <div className="header">
@@ -43,6 +48,9 @@ function Calendar() {
           <div className="day">{day}</div>
         ))}
       </div>
+	  <div className="days-grid">
+		{grid.map((day) => <DayCard day={day}/>)}
+	  </div>
     </div>
   );
 }
