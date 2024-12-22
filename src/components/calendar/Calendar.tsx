@@ -56,14 +56,28 @@ function Calendar() {
     ...Array.from({ length: days }, (_, i) => i + 1),
   ];
 
+  function handleMonthChange(operation: string) {
+    if (operation == "prev") {
+      if (month == 0) {
+        setMonth(11);
+        setYear(year - 1);
+      } else setMonth(month - 1);
+    } else {
+      if (month == 11) {
+        setMonth(0);
+        setYear(year + 1);
+      } else setMonth(month + 1);
+    }
+  }
+
   return (
     <div className="calendar">
       <div className="flex justify-between m-2">
-        <Button>Previous</Button>
+        <Button onClick={() => handleMonthChange("prev")}>Previous</Button>
         <div className="bg-orange-100 px-8 border-2 border-black text-lg align-middle text-center">
           {monthNames[month]} - {year}
         </div>
-        <Button>Next</Button>
+        <Button onClick={() => handleMonthChange("next")}>Next</Button>
       </div>
       <div className="header">
         {weekDays.map((day) => (
