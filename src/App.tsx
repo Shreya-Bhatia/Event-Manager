@@ -1,7 +1,7 @@
-import { Button } from "./components/ui/button";
+import Calendar from "./components/calendar/Calendar";
 
 function App() {
-  return <Button>Click</Button>;
+  return <Calendar/>
 }
 
 export default App;
