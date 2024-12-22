@@ -1,29 +1,44 @@
 import DayCard from "./DayCard";
 import { useState, useEffect } from "react";
 import "./calendar.css";
+import { Button } from "../ui/button";
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date("11-10-2024"));
   const [days, setDays] = useState<number>(0);
   const [firstDay, setFirstDay] = useState<number>(0);
+  const [month, setMonth] = useState<number>(currentDate.getMonth());
+  const [year, setYear] = useState<number>(currentDate.getFullYear());
 
-  const weekDays = [
+  const weekDays: string[] = [
     "Sunday",
     "Monday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
-    "Saturday"
+    "Saturday",
+  ];
+
+  const monthNames: string[] = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   useEffect(() => {
     function isLeapYear(year: number) {
       return year % 100 === 0 ? year % 400 === 0 : year % 4 === 0;
     }
-
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
 
     if (month === 1) {
       setDays(isLeapYear(currentDate.getFullYear()) ? 29 : 28);
@@ -34,23 +49,32 @@ function Calendar() {
     }
 
     setFirstDay(new Date(year, month, 1).getDay());
-  }, [currentDate]);
+  }, [month]);
 
   const grid = [
     ...Array(firstDay).fill(0),
-    ...Array.from({ length: days }, (_, i) => i + 1)
+    ...Array.from({ length: days }, (_, i) => i + 1),
   ];
 
   return (
     <div className="calendar">
+      <div className="flex justify-between m-2">
+        <Button>Previous</Button>
+        <div className="bg-orange-100 px-8 border-2 border-black text-lg align-middle text-center">
+          {monthNames[month]} - {year}
+        </div>
+        <Button>Next</Button>
+      </div>
       <div className="header">
         {weekDays.map((day) => (
           <div className="day">{day}</div>
         ))}
       </div>
-	  <div className="days-grid">
-		{grid.map((day) => <DayCard day={day}/>)}
-	  </div>
+      <div className="days-grid">
+        {grid.map((day) => (
+          <DayCard day={day} />
+        ))}
+      </div>
     </div>
   );
 }
