@@ -28,13 +28,13 @@ function EventList({ type, day }: Props) {
 
   return (
     <div
-      className={type == "long" ? "w-[500px] grid gap-2 my-4" : "grid gap-2"}
+      className={type == "long" ? "w-[500px] grid gap-2 my-4" : "grid gap-0.5 smallevent"}
     >
       {currEvents.map((event) =>
         type == "short" ? (
           <div
             key={event.id}
-            className="bg-emerald-200 rounded-lg px-2 py-1 grid gap-1"
+            className="bg-emerald-200 rounded-lg text-base name"
           >
             {event.name}
           </div>

@@ -24,11 +24,12 @@
 	border-width: 0 1px 1px 0;
 	border-color: black;
 	background-color: rgb(228, 255, 245);
-	height: 100px;
-	padding: 10px;
+	height: 105px;
+	padding: 1px 5px;
 	text-align: center;
 	font-weight: bold;
 	font-size: large;
+	overflow-y: scroll;
 }
 
 .calendar .days-grid > :nth-child(7n+1) {
@@ -42,4 +43,25 @@
 
 .calendar .day-card.selected {
 	border: 5px solid navy;
+}
+
+::-webkit-scrollbar {
+	background-color: transparent;
+	width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: purple;
+	border-radius: 5px;
+}
+
+.day-card .smallevent {
+	overflow-y: scroll;
+	max-height: 65px;
+}
+
+.day-card .smallevent .name {
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	padding: 0 10px;
 }
