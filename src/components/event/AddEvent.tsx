@@ -15,22 +15,27 @@ interface Props {
   day: number;
   month: number;
   year: number;
+  eventSelected: Event | null;
 }
 
-function AddEvent({ setCurrTab, day, month, year }: Props) {
-  const [event, setEvent] = useState<Event>({
-    id: v4(),
-    name: "",
-    description: "",
-    startTime: parseTime("01:00"),
-    endTime: parseTime("02:00"),
-    day: day,
-    month: month,
-    year: year,
-  });
+function AddEvent({ setCurrTab, day, month, year, eventSelected }: Props) {
+  const [event, setEvent] = useState<Event>(
+    eventSelected
+      ? eventSelected
+      : {
+          id: v4(),
+          name: "",
+          description: "",
+          startTime: parseTime("01:00"),
+          endTime: parseTime("02:00"),
+          day: day,
+          month: month,
+          year: year,
+        }
+  );
 
-  const [error, setError] = useState<string | null>(null);
-  const { addEvent } = useEvents();
+  const [error, setError] = useState<any>(null);
+  const { addEvent, editEvent } = useEvents();
 
   function updateEvent(key: keyof Event, value: Time | string | null) {
     setEvent((prev) => ({
@@ -39,12 +44,27 @@ function AddEvent({ setCurrTab, day, month, year }: Props) {
     }));
   }
 
-  function handleAddEvent() {
+  function clientValidation(event: Event): boolean {
     if (!event.name.trim()) {
       setError("Please fill the name");
+      return false;
+    }
+    if (event.startTime >= event.endTime) {
+      setError("Start time must be less than End time !");
+      return false;
+    }
+    return true;
+  }
+
+  function handleEvent() {
+    if (!clientValidation(event)) return;
+    try {
+      if (eventSelected) editEvent(event);
+      else addEvent(event);
+    } catch (error) {
+      setError(error);
       return;
     }
-    addEvent(event);
     setError(null);
     setCurrTab("events");
   }
@@ -89,7 +109,9 @@ function AddEvent({ setCurrTab, day, month, year }: Props) {
         <Button variant="destructive" onClick={() => setCurrTab("events")}>
           Cancel
         </Button>
-        <Button onClick={handleAddEvent}>Add</Button>
+        <Button onClick={handleEvent}>
+          {eventSelected ? "Update Event" : "Add Event"}
+        </Button>
       </div>
     </div>
   );

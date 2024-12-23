@@ -31,6 +31,15 @@ const EventProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const addEvent = (event: Event) => {
+    events.forEach((eventStored) => {
+      if(eventStored.day == event.day && eventStored.month==event.month && eventStored.year==event.year)
+      {
+        if(eventStored.startTime <= event.startTime && eventStored.endTime >= event.endTime)
+        {
+          throw "Not elegant !";
+        }
+      }
+    });
     setEvents((prev) => {
       const newEvents = [...prev, event];
       syncLocalStorage(newEvents);

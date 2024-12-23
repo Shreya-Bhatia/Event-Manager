@@ -10,9 +10,11 @@ import { MdDelete } from "react-icons/md";
 interface Props {
   type: string;
   day: Day | null;
+  setCurrTab: Function;
+  setEvent: Function;
 }
 
-function EventList({ type, day }: Props) {
+function EventList({ type, day, setCurrTab, setEvent }: Props) {
   const { events, deleteEvent } = useEvents();
   const { selected } = useDay();
   const [currEvents, setCurrEvents] = useState<Event[]>([]);
@@ -28,6 +30,11 @@ function EventList({ type, day }: Props) {
     });
     setCurrEvents(filteredEvents);
   }, [events, selected, day]);
+
+  function handleEditEvent(event: Event) {
+    setCurrTab("Edit");
+    setEvent(event);
+  }
 
   return (
     <div
@@ -59,7 +66,10 @@ function EventList({ type, day }: Props) {
                 <div className="bg-emerald-100 px-2 mr-2 self-stretch flex items-center">
                   {event.startTime.toString()} -- {event.endTime.toString()}
                 </div>
-                <div className="border-1 border-black hover:bg-green-400 rounded-lg px-2 py-1 mr-2">
+                <div
+                  className="border-1 border-black hover:bg-green-400 rounded-lg px-2 py-1 mr-2"
+                  onClick={() => handleEditEvent(event)}
+                >
                   <MdEdit size={20} />
                 </div>
                 <div
