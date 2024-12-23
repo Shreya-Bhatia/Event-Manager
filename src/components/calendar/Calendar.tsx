@@ -3,12 +3,7 @@ import { useState, useEffect } from "react";
 import "./calendar.css";
 import { Button } from "../ui/button";
 import { TimeInputValue } from "@nextui-org/date-input";
-
-type Day = {
-  day: number;
-  month: number;
-  year: number;
-};
+import { useDay } from "@/context/dayContext";
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -16,11 +11,7 @@ function Calendar() {
   const [firstDay, setFirstDay] = useState<number>(0);
   const [month, setMonth] = useState<number>(currentDate.getMonth());
   const [year, setYear] = useState<number>(currentDate.getFullYear());
-  const [selectedDay, setSelectedDay] = useState<Day>({
-    day: currentDate.getDate(),
-    month: month,
-    year: year,
-  });
+  const { selected, setSelectedDay } = useDay();
 
   const weekDays: string[] = [
     "Sunday",
@@ -109,9 +100,9 @@ function Calendar() {
               currentDate.getDate() == day
             }
             isSelected={
-              selectedDay.day == day &&
-              selectedDay.month == month &&
-              selectedDay.year == year
+              selected.day == day &&
+              selected.month == month &&
+              selected.year == year
             }
             setSelectedDay={setSelectedDay}
             year={year}

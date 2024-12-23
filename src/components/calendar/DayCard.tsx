@@ -1,6 +1,7 @@
 import "./calendar.css";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import EventDialog from "../event/EventDialog";
+import EventList from "../event/EventList";
 
 interface Props {
   day: number;
@@ -29,6 +30,10 @@ function DayCard({
           }
         >
           {day == 0 ? "" : day}
+          <EventList
+            type="short"
+            day={{ day: day, month: month, year: year }}
+          />
         </div>
       </DialogTrigger>
       <EventDialog day={day} month={month} year={year} />

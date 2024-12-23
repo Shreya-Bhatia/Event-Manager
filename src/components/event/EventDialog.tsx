@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { Button } from "../ui/button";
 import AddEvent from "./AddEvent";
+import EventList from "./EventList";
 
 interface Props {
   day: number;
@@ -31,12 +32,14 @@ function EventDialog({ day, month, year }: Props) {
           )}
         </DialogTitle>
       </DialogHeader>
-      {/* {currTab == "events" ?? div} */}
 
       {currTab === "add" ? (
-        <AddEvent setCurrTab={setCurrTab} />
+        <AddEvent setCurrTab={setCurrTab} day={day} month={month} year={year} />
       ) : (
-        <Button onClick={() => setCurrTab("add")}>Add</Button>
+        <div>
+          <Button onClick={() => setCurrTab("add")}>Add</Button>
+          <EventList type="long" />
+        </div>
       )}
     </DialogContent>
   );

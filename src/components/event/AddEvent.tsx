@@ -6,18 +6,31 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { Event } from "../../types/types";
 import { parseTime, Time } from "@internationalized/date";
+import { Alert } from "@nextui-org/alert";
+import { v4 } from "uuid";
+import { useEvents } from "@/context/eventContext";
 
 interface Props {
   setCurrTab: Function;
+  day: number;
+  month: number;
+  year: number;
 }
 
-function AddEvent({ setCurrTab }: Props) {
+function AddEvent({ setCurrTab, day, month, year }: Props) {
   const [event, setEvent] = useState<Event>({
+    id: v4(),
     name: "",
     description: "",
     startTime: parseTime("01:00"),
     endTime: parseTime("02:00"),
+    day: day,
+    month: month,
+    year: year,
   });
+
+  const [error, setError] = useState<string | null>(null);
+  const { addEvent } = useEvents();
 
   function updateEvent(key: keyof Event, value: Time | string | null) {
     setEvent((prev) => ({
@@ -26,8 +39,19 @@ function AddEvent({ setCurrTab }: Props) {
     }));
   }
 
+  function handleAddEvent() {
+    if (!event.name.trim()) {
+      setError("Please fill the name");
+      return;
+    }
+    addEvent(event);
+    setError(null);
+    setCurrTab("events");
+  }
+
   return (
     <div className="grid gap-4 py-4">
+      {error && <Alert color="danger" title={error} />}
       <div className="grid grid-rows-2 items-center">
         <Label>Name</Label>
         <Input
@@ -65,7 +89,7 @@ function AddEvent({ setCurrTab }: Props) {
         <Button variant="destructive" onClick={() => setCurrTab("events")}>
           Cancel
         </Button>
-        <Button>Add</Button>
+        <Button onClick={handleAddEvent}>Add</Button>
       </div>
     </div>
   );
