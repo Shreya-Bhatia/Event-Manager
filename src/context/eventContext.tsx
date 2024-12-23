@@ -4,20 +4,45 @@ import { Event, EventsContextType } from "../types/types";
 const EventContext = createContext<EventsContextType | undefined>(undefined);
 
 const EventProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [events, setEvents] = useState<Event[]>([]);
+  let storedEvent: Event[] = [];
+
+  const eventsString = localStorage.getItem("events");
+  if (eventsString) {
+    storedEvent = JSON.parse(eventsString);
+  } else {
+    localStorage.setItem("events", "[]");
+  }
+
+  const [events, setEvents] = useState<Event[]>(storedEvent);
+
+  const syncLocalStorage = (updatedEvents: Event[]) => {
+    localStorage.setItem("events", JSON.stringify(updatedEvents));
+  };
 
   const addEvent = (event: Event) => {
-    setEvents((prev) => [...prev, event]);
+    setEvents((prev) => {
+      const newEvents = [...prev, event];
+      syncLocalStorage(newEvents);
+      return newEvents;
+    });
   };
 
   const editEvent = (updatedEvent: Event) => {
-    setEvents((prev) =>
-      prev.map((event) => (event.id === updatedEvent.id ? updatedEvent : event))
-    );
+    setEvents((prev) => {
+      const newEvents = prev.map((event) =>
+        event.id === updatedEvent.id ? updatedEvent : event
+      );
+      syncLocalStorage(newEvents);
+      return newEvents;
+    });
   };
 
   const deleteEvent = (id: string) => {
-    setEvents((prev) => prev.filter((event) => event.id !== id));
+    setEvents((prev) => {
+      const newEvents = prev.filter((event) => event.id !== id);
+      syncLocalStorage(newEvents);
+      return newEvents;
+    });
   };
 
   return (
