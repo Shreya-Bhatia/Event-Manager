@@ -6,7 +6,7 @@ import { Day } from "@/types/types";
 
 interface Props {
   type: string;
-  day?: Day;
+  day: Day | null;
 }
 
 function EventList({ type, day }: Props) {
@@ -15,7 +15,7 @@ function EventList({ type, day }: Props) {
   const [currEvents, setCurrEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-	const dayUsed = day ? day : selected;
+    const dayUsed = day != null ? day : selected;
     const filteredEvents = events.filter((event) => {
       return (
         event.day == dayUsed.day &&
@@ -24,17 +24,19 @@ function EventList({ type, day }: Props) {
       );
     });
     setCurrEvents(filteredEvents);
-  }, [events, selected]);
+  }, [events, selected, day]);
 
   return (
     <div
-      className={type == "long" ? "w-[500px] grid gap-2 my-4" : "grid gap-0.5 smallevent"}
+      className={
+        type == "long" ? "w-[500px] grid gap-2 my-4" : "grid gap-0.5 smallevent"
+      }
     >
       {currEvents.map((event) =>
         type == "short" ? (
           <div
             key={event.id}
-            className="bg-emerald-200 rounded-lg text-base name"
+            className="bg-emerald-200 rounded-lg text-base name font-normal"
           >
             {event.name}
           </div>

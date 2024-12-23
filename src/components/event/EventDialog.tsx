@@ -27,7 +27,7 @@ function EventDialog({ day, month, year }: Props) {
             "Add event details"
           ) : (
             <div>
-              Events on {day}-{month}-{year}
+              Events on {day}-{month+1}-{year}
             </div>
           )}
         </DialogTitle>
@@ -38,7 +38,7 @@ function EventDialog({ day, month, year }: Props) {
       ) : (
         <div>
           <Button onClick={() => setCurrTab("add")}>Add</Button>
-          <EventList type="long" />
+          <EventList type="long" day={null} />
         </div>
       )}
     </DialogContent>
