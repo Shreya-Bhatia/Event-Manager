@@ -39,3 +39,7 @@
 	background-color: rgb(255, 227, 65);
 	border: 5px solid orangered;
 }
+
+.calendar .day-card.selected {
+	border: 5px solid navy;
+}

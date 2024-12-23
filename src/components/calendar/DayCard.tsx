@@ -7,15 +7,26 @@ interface Props {
   isToday: boolean;
   year: number;
   month: number;
+  isSelected: boolean;
+  setSelectedDay: Function;
 }
 
-function DayCard({ day, isToday, year, month }: Props) {
-
+function DayCard({
+  day,
+  isToday,
+  year,
+  month,
+  isSelected,
+  setSelectedDay,
+}: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <div
-          className={isToday ? "day-card curr" : "day-card"}
+          onClick={() => setSelectedDay({ day: day, month: month, year: year })}
+          className={
+            "day-card" + (isToday ? " curr" : isSelected ? " selected" : "")
+          }
         >
           {day == 0 ? "" : day}
         </div>

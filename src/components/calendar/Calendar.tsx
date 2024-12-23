@@ -107,7 +107,12 @@ function Calendar() {
               currentDate.getMonth() == month &&
               currentDate.getDate() == day
             }
-            
+            isSelected={
+              selectedDay.day == day &&
+              selectedDay.month == month &&
+              selectedDay.year == year
+            }
+            setSelectedDay={setSelectedDay}
             year={year}
             month={month}
           />

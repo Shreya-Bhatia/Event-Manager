@@ -4,12 +4,16 @@ import { Button } from "../ui/button";
 import { TimeInput } from "@nextui-org/date-input";
 import { Textarea } from "@/components/ui/textarea";
 
-function AddEvent() {
+interface Props {
+  setCurrTab: Function;
+}
+
+function AddEvent({ setCurrTab }: Props) {
   return (
     <div className="grid gap-4 py-4">
       <div className="grid grid-rows-2 items-center">
-        <Label htmlFor="event-name">Name</Label>
-        <Input id="event-name" />
+        <Label>Name</Label>
+        <Input />
       </div>
       <div className="grid grid-cols-2 items-center gap-4">
         <TimeInput
@@ -26,11 +30,13 @@ function AddEvent() {
         />
       </div>
       <div className="grid grid-cols-[400px] gap-2 items-center">
-        <Label htmlFor="description">Description</Label>
+        <Label>Description</Label>
         <Textarea placeholder="Type your description here." />
       </div>
       <div className="flex justify-between">
-        <Button variant="destructive">Cancel</Button>
+        <Button variant="destructive" onClick={() => setCurrTab("events")}>
+          Cancel
+        </Button>
         <Button>Add</Button>
       </div>
     </div>

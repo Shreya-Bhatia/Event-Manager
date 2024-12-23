@@ -17,8 +17,6 @@ interface Props {
 
 function EventDialog({ day, month, year }: Props) {
   const [currTab, setCurrTab] = useState<string>("events");
-  const [startTime, setStartTime] = useState<string>("10:00");
-  const [endTime, setEndTime] = useState<string>("11:00");
 
   return (
     <DialogContent className="max-w-fit">
@@ -36,7 +34,7 @@ function EventDialog({ day, month, year }: Props) {
       {/* {currTab == "events" ?? div} */}
 
       {currTab === "add" ? (
-        <AddEvent />
+        <AddEvent setCurrTab={setCurrTab} />
       ) : (
         <Button onClick={() => setCurrTab("add")}>Add</Button>
       )}
