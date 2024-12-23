@@ -3,12 +3,23 @@ import { useState, useEffect } from "react";
 import "./calendar.css";
 import { Button } from "../ui/button";
 
+type Day = {
+  day: number;
+  month: number;
+  year: number;
+};
+
 function Calendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [days, setDays] = useState<number>(0);
   const [firstDay, setFirstDay] = useState<number>(0);
   const [month, setMonth] = useState<number>(currentDate.getMonth());
   const [year, setYear] = useState<number>(currentDate.getFullYear());
+  const [selectedDay, setSelectedDay] = useState<Day>({
+    day: currentDate.getDate(),
+    month: month,
+    year: year,
+  });
 
   const weekDays: string[] = [
     "Sunday",
@@ -81,18 +92,24 @@ function Calendar() {
       </div>
       <div className="header">
         {weekDays.map((day) => (
-          <div className="day">{day}</div>
+          <div key={day} className="day">
+            {day}
+          </div>
         ))}
       </div>
       <div className="days-grid">
-        {grid.map((day) => (
+        {grid.map((day: number, i: number) => (
           <DayCard
+            key={i}
             day={day}
             isToday={
               currentDate.getFullYear() == year &&
               currentDate.getMonth() == month &&
               currentDate.getDate() == day
             }
+            
+            year={year}
+            month={month}
           />
         ))}
       </div>
