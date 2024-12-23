@@ -2,6 +2,7 @@ import DayCard from "./DayCard";
 import { useState, useEffect } from "react";
 import "./calendar.css";
 import { Button } from "../ui/button";
+import { TimeInputValue } from "@nextui-org/date-input";
 
 type Day = {
   day: number;
