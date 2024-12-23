@@ -1,0 +1,10 @@
+.detailed-event {
+	overflow-y: scroll;
+	max-height: 300px;
+}
+
+.detailed-event .event-details .description {
+	text-wrap: wrap;
+	word-wrap: break-word;
+	width: 200px;
+}

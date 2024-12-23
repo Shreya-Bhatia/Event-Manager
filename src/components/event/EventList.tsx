@@ -3,6 +3,9 @@ import { useEvents } from "@/context/eventContext";
 import { useEffect, useState } from "react";
 import { Event } from "@/types/types";
 import { Day } from "@/types/types";
+import "./event.css";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 interface Props {
   type: string;
@@ -10,7 +13,7 @@ interface Props {
 }
 
 function EventList({ type, day }: Props) {
-  const { events } = useEvents();
+  const { events, deleteEvent } = useEvents();
   const { selected } = useDay();
   const [currEvents, setCurrEvents] = useState<Event[]>([]);
 
@@ -29,7 +32,9 @@ function EventList({ type, day }: Props) {
   return (
     <div
       className={
-        type == "long" ? "w-[500px] grid gap-2 my-4" : "grid gap-0.5 smallevent"
+        type == "long"
+          ? "w-[500px] grid gap-2 my-4 detailed-event"
+          : "grid gap-0.5 smallevent"
       }
     >
       {currEvents.map((event) =>
@@ -43,19 +48,36 @@ function EventList({ type, day }: Props) {
         ) : (
           <div
             key={event.id}
-            className="bg-emerald-200 rounded-lg px-4 py-2 grid gap-1"
+            className="bg-emerald-200 rounded-lg pl-4 grid gap-1"
           >
             <div className="flex justify-between">
-              <span className="font-bold">{event.name}</span>
-              <div className="bg-emerald-100 px-2">
-                {event.startTime.toString()} -- {event.endTime.toString()}
+              <div className="flex flex-col my-2 event-details">
+                <span className="font-bold">{event.name}</span>{" "}
+                <div className="description">{event.description}</div>
+              </div>
+              <div className="flex items-center">
+                <div className="bg-emerald-100 px-2 mr-2 self-stretch flex items-center">
+                  {event.startTime.toString()} -- {event.endTime.toString()}
+                </div>
+                <div className="border-1 border-black hover:bg-green-400 rounded-lg px-2 py-1 mr-2">
+                  <MdEdit size={20} />
+                </div>
+                <div
+                  className="border-1 border-black hover:bg-red-200 rounded-lg px-2 py-1 mr-2"
+                  onClick={() => deleteEvent(event.id)}
+                >
+                  <MdDelete color="red" size={20} />
+                </div>
               </div>
             </div>
-            <div>{event.description}</div>
           </div>
         )
       )}
-      {(currEvents.length == 0 && type == "long") && <div className="bg-purple-200 p-4 text-center rounded-lg">No Events Found !</div>}
+      {currEvents.length == 0 && type == "long" && (
+        <div className="bg-purple-200 p-4 text-center rounded-lg">
+          No Events Found !
+        </div>
+      )}
     </div>
   );
 }

@@ -24,7 +24,7 @@ function EventDialog({ day, month, year }: Props) {
       <DialogHeader>
         <DialogTitle>
           {currTab == "add" ? (
-            "Add event details"
+            "Add Event Details"
           ) : (
             <div className="flex justify-between mr-6 items-center">
               <div>

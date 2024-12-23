@@ -1,7 +1,6 @@
 import React, { createContext, useState, ReactNode } from "react";
 import { Event, EventsContextType } from "../types/types";
-import { TimeInputValue } from "@nextui-org/date-input";
-import { parseTime, Time } from "@internationalized/date";
+import { parseTime } from "@internationalized/date";
 
 const EventContext = createContext<EventsContextType | undefined>(undefined);
 
