@@ -1,5 +1,7 @@
 import React, { createContext, useState, ReactNode } from "react";
 import { Event, EventsContextType } from "../types/types";
+import { TimeInputValue } from "@nextui-org/date-input";
+import { parseTime, Time } from "@internationalized/date";
 
 const EventContext = createContext<EventsContextType | undefined>(undefined);
 
@@ -8,7 +10,12 @@ const EventProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const eventsString = localStorage.getItem("events");
   if (eventsString) {
-    storedEvent = JSON.parse(eventsString);
+    let storedEventCopy: Event[] = JSON.parse(eventsString);
+    storedEvent = storedEventCopy.map((event) => ({
+      ...event,
+      startTime: parseTime(event.startTime.toString()),
+      endTime: parseTime(event.endTime.toString()),
+    }));
   } else {
     localStorage.setItem("events", "[]");
   }
@@ -16,7 +23,12 @@ const EventProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [events, setEvents] = useState<Event[]>(storedEvent);
 
   const syncLocalStorage = (updatedEvents: Event[]) => {
-    localStorage.setItem("events", JSON.stringify(updatedEvents));
+    const eventsToStore = updatedEvents.map((event) => ({
+      ...event,
+      startTime: event.startTime.toString(),
+      endTime: event.endTime.toString(),
+    }));
+    localStorage.setItem("events", JSON.stringify(eventsToStore));
   };
 
   const addEvent = (event: Event) => {

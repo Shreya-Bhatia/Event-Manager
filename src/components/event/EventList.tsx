@@ -55,6 +55,7 @@ function EventList({ type, day }: Props) {
           </div>
         )
       )}
+      {(currEvents.length == 0 && type == "long") && <div className="bg-purple-200 p-4 text-center rounded-lg">No Events Found !</div>}
     </div>
   );
 }

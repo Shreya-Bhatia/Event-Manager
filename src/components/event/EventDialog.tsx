@@ -26,8 +26,11 @@ function EventDialog({ day, month, year }: Props) {
           {currTab == "add" ? (
             "Add event details"
           ) : (
-            <div>
-              Events on {day}-{month+1}-{year}
+            <div className="flex justify-between mr-6 items-center">
+              <div>
+                Events on {day}-{month + 1}-{year}
+              </div>
+              <Button onClick={() => setCurrTab("add")}>Add Event</Button>
             </div>
           )}
         </DialogTitle>
@@ -36,10 +39,7 @@ function EventDialog({ day, month, year }: Props) {
       {currTab === "add" ? (
         <AddEvent setCurrTab={setCurrTab} day={day} month={month} year={year} />
       ) : (
-        <div>
-          <Button onClick={() => setCurrTab("add")}>Add</Button>
-          <EventList type="long" day={null} />
-        </div>
+        <EventList type="long" day={null} />
       )}
     </DialogContent>
   );
