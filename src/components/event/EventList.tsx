@@ -10,8 +10,8 @@ import { MdDelete } from "react-icons/md";
 interface Props {
   type: string;
   day: Day | null;
-  setCurrTab: Function;
-  setEvent: Function;
+  setCurrTab?: Function;
+  setEvent?: Function;
 }
 
 function EventList({ type, day, setCurrTab, setEvent }: Props) {
@@ -32,8 +32,8 @@ function EventList({ type, day, setCurrTab, setEvent }: Props) {
   }, [events, selected, day]);
 
   function handleEditEvent(event: Event) {
-    setCurrTab("Edit");
-    setEvent(event);
+    if(setCurrTab) setCurrTab("Edit");
+    if(setEvent) setEvent(event);
   }
 
   return (
@@ -48,7 +48,7 @@ function EventList({ type, day, setCurrTab, setEvent }: Props) {
         type == "short" ? (
           <div
             key={event.id}
-            className="bg-emerald-200 rounded-lg text-base name font-normal"
+            className="bg-emerald-200 rounded-lg text-base name font-normal border-1 border-black"
           >
             {event.name}
           </div>
