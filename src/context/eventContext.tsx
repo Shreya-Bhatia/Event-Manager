@@ -31,7 +31,7 @@ const EventProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     localStorage.setItem("events", JSON.stringify(eventsToStore));
   };
 
-  const addEvent = (event: Event) => {
+  const checkEventCollision = (event: Event) => {
     events.forEach((eventStored) => {
       if (checkEventDay(eventStored, event)) {
         if (checkEventTime(eventStored, event)) {
@@ -39,6 +39,10 @@ const EventProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
       }
     });
+  }
+
+  const addEvent = (event: Event) => {
+    checkEventCollision(event);
     setEvents((prev) => {
       const newEvents = [...prev, event];
       syncLocalStorage(newEvents);
@@ -47,6 +51,7 @@ const EventProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const editEvent = (updatedEvent: Event) => {
+    checkEventCollision(updatedEvent);
     setEvents((prev) => {
       const newEvents = prev.map((event) =>
         event.id === updatedEvent.id ? updatedEvent : event
