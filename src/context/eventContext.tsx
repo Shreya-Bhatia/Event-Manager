@@ -1,6 +1,7 @@
 import React, { createContext, useState, ReactNode } from "react";
 import { Event, EventsContextType } from "../types/types";
 import { parseTime } from "@internationalized/date";
+import { checkEventDay, checkEventTime } from "@/lib/utils";
 
 const EventContext = createContext<EventsContextType | undefined>(undefined);
 
@@ -32,11 +33,9 @@ const EventProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const addEvent = (event: Event) => {
     events.forEach((eventStored) => {
-      if(eventStored.day == event.day && eventStored.month==event.month && eventStored.year==event.year)
-      {
-        if(eventStored.startTime <= event.startTime && eventStored.endTime >= event.endTime)
-        {
-          throw "Not elegant !";
+      if (checkEventDay(eventStored, event)) {
+        if (checkEventTime(eventStored, event)) {
+          throw "Two Events can't be at same time !";
         }
       }
     });

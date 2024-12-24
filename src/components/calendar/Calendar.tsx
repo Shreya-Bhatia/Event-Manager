@@ -4,6 +4,7 @@ import "./calendar.css";
 import { Button } from "../ui/button";
 import { TimeInputValue } from "@nextui-org/date-input";
 import { useDay } from "@/context/dayContext";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -76,11 +77,11 @@ function Calendar() {
   return (
     <div className="calendar">
       <div className="flex justify-between m-2">
-        <Button onClick={() => handleMonthChange("prev")}>Previous</Button>
+        <Button onClick={() => handleMonthChange("prev")}><ChevronLeft />Previous</Button>
         <div className="bg-orange-100 px-8 border-2 border-black text-lg align-middle text-center">
           {monthNames[month]} - {year}
         </div>
-        <Button onClick={() => handleMonthChange("next")}>Next</Button>
+        <Button onClick={() => handleMonthChange("next")}>Next<ChevronRight /></Button>
       </div>
       <div className="header">
         {weekDays.map((day) => (
