@@ -9,7 +9,7 @@ import MonthYearPopover from "./MonthYearPopover";
 import { weekDays, monthNames } from "@/lib/utils";
 
 function Calendar() {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [currentDate] = useState<Date>(new Date());
   const [days, setDays] = useState<number>(0);
   const [firstDay, setFirstDay] = useState<number>(0);
   const [month, setMonth] = useState<number>(currentDate.getMonth());
@@ -65,7 +65,6 @@ function Calendar() {
             </div>
           </PopoverTrigger>
           <MonthYearPopover
-            month={month}
             setMonth={setMonth}
             year={year}
             setYear={setYear}

@@ -4,13 +4,12 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import { monthNames } from "@/lib/utils";
 
 interface Props {
-  month: number;
   year: number;
   setMonth: Function;
   setYear: Function;
 }
 
-function MonthYearPopover({ month, year, setMonth, setYear }: Props) {
+function MonthYearPopover({ year, setMonth, setYear }: Props) {
   return (
     <PopoverContent className="w-80">
       <div className="bg-sky-200 flex justify-between items-center mb-2 rounded-md">

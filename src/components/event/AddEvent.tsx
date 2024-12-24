@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { Event } from "../../types/types";
 import { parseTime, Time } from "@internationalized/date";
-import { Alert } from "@nextui-org/alert";
+import { Alert } from "@nextui-org/react";
 import { v4 } from "uuid";
 import { useEvents } from "@/context/eventContext";
 
@@ -71,7 +71,7 @@ function AddEvent({ setCurrTab, day, month, year, eventSelected }: Props) {
 
   return (
     <div className="grid gap-4 py-4">
-      {error && <Alert color="danger" title={error} />}
+      {error && <Alert color="danger" title={error} description="" />}
       <div className="grid grid-rows-2 items-center">
         <Label>Name</Label>
         <Input
