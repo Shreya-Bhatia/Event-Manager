@@ -6,6 +6,31 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const weekDays: string[] = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+export const monthNames: string[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 export function checkEventDay(event1: Event, event2: Event): boolean {
   return (
     event1.day == event2.day &&
@@ -17,7 +42,10 @@ export function checkEventDay(event1: Event, event2: Event): boolean {
 // checks whether event 2 occurs at time of event 1
 export function checkEventTime(event1: Event, event2: Event): boolean {
   // case 1 : event 2 starts during event 1
-  if (event1.startTime <= event2.startTime && event1.endTime >= event2.startTime)
+  if (
+    event1.startTime <= event2.startTime &&
+    event1.endTime >= event2.startTime
+  )
     return true;
   // case 2 : event 2 starts before event 1 but ends during event 1 or after event 1
   if (event1.startTime >= event2.startTime && event1.startTime < event2.endTime)

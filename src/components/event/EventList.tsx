@@ -48,7 +48,7 @@ function EventList({ type, day, setCurrTab, setEvent }: Props) {
         type == "short" ? (
           <div
             key={event.id}
-            className="bg-emerald-200 rounded-lg text-base name font-normal border-1 border-black"
+            className="bg-white rounded-lg text-base name font-normal border-1 border-black"
           >
             {event.name}
           </div>

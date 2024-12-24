@@ -2,9 +2,11 @@ import DayCard from "./DayCard";
 import { useState, useEffect } from "react";
 import "./calendar.css";
 import { Button } from "../ui/button";
-import { TimeInputValue } from "@nextui-org/date-input";
 import { useDay } from "@/context/dayContext";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { Popover, PopoverTrigger } from "@/components/ui/popover";
+import MonthYearPopover from "./MonthYearPopover";
+import { weekDays, monthNames } from "@/lib/utils";
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -13,31 +15,6 @@ function Calendar() {
   const [month, setMonth] = useState<number>(currentDate.getMonth());
   const [year, setYear] = useState<number>(currentDate.getFullYear());
   const { selected, setSelectedDay } = useDay();
-
-  const weekDays: string[] = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  const monthNames: string[] = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   useEffect(() => {
     function isLeapYear(year: number) {
@@ -53,7 +30,7 @@ function Calendar() {
     }
 
     setFirstDay(new Date(year, month, 1).getDay());
-  }, [month]);
+  }, [month, year]);
 
   const grid = [
     ...Array(firstDay).fill(0),
@@ -77,11 +54,27 @@ function Calendar() {
   return (
     <div className="calendar">
       <div className="flex justify-between m-2">
-        <Button onClick={() => handleMonthChange("prev")}><ChevronLeft />Previous</Button>
-        <div className="bg-orange-100 px-8 border-2 border-black text-lg align-middle text-center">
-          {monthNames[month]} - {year}
-        </div>
-        <Button onClick={() => handleMonthChange("next")}>Next<ChevronRight /></Button>
+        <Button onClick={() => handleMonthChange("prev")}>
+          <ChevronLeft />
+          Previous
+        </Button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <div className="bg-orange-100 px-8 border-2 border-black text-lg align-middle text-center">
+              {monthNames[month]} - {year}
+            </div>
+          </PopoverTrigger>
+          <MonthYearPopover
+            month={month}
+            setMonth={setMonth}
+            year={year}
+            setYear={setYear}
+          />
+        </Popover>
+        <Button onClick={() => handleMonthChange("next")}>
+          Next
+          <ChevronRight />
+        </Button>
       </div>
       <div className="header">
         {weekDays.map((day) => (
