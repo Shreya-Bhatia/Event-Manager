@@ -1,50 +1,59 @@
-# React + TypeScript + Vite
+# Scheduler 📆 - Event Manager Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Scheduler** is a user-friendly app for organizing your schedule. It lets you see your events in the calendar. Users can add, edit, or delete events with details like name, time, and description. Events are saved in localStorage, ensuring they persist across sessions. ✨
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[**Check out the live website here**](https://event-manager-shreya.vercel.app/)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## ✨ Features ✨
 
-- Configure the top-level `parserOptions` property like this:
+### 1. Calendar Navigation
+**※** Distinct color coding for weekdays and weekends.  
+**※** Current and Selected days highlighted for easy identification.  
+**※** Easy navigation between months using "Previous" and "Next" buttons.  
+**※** **Quick access** to any month or year by clicking on the displayed month/year.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 2. View Events
+**※** The calendar shows a **summary** of the events for each day.  
+**※** Click on any day to open a **detailed view** of all events scheduled for that day.  
+
+### 3. Event Management
+**※** Enter event information such as name, start time, end time, and a description to create an event.  
+**※** **Alerts users** if two events are scheduled at the same time.  
+**※** Users can modify or remove events as needed.  
+
+### 4. Data Persistence
+**※** Events are stored in `localStorage` to ensure that they persist across sessions.  
+
+---
+
+## Future Plans 🤩
+- [ ] Adding drag and drop to reschedule events
+- [ ] Color coding for events
+- [ ] Adding events that can span multiple days
+- [ ] Reminder notifications for events
+
+---
+
+## Setup Instructions
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm
+
+---
+
+### 1. Install the dependencies
+
+```
+npm i
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2. Start the app
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```
+npm run dev
 ```
